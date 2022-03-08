@@ -7,7 +7,6 @@ deploy-component:
   stage: deploy
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-    - cat .npmrc
     - npm publish
 
   tags:
