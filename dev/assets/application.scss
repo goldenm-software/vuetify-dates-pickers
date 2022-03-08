@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Fira+Sans+Condensed:wght@300;400;700&display=swap');
+@import url('https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css');
+@import '~vuetify/dist/vuetify.min.css';
+
+.v-data-table__wrapper {
+  &::-webkit-scrollbar{
+    margin-top: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(126, 124, 124, 0.76);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  table tr td {
+    padding: 10px 5px;
+  }
+}
+
+.v-menu__content.v-menu__content--fixed.menuable__content__active.v-autocomplete__content {
+  &::-webkit-scrollbar{
+    margin-top: 5px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(126, 124, 124, 0.76);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.better-scrollbar, .v-color-picker__swatches, .map__panel--content {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(126, 124, 124, 0.76);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, th, .v-card__title, .title--text {
+  font-family: 'Cabin', helvetica, sans-serif;
+  font-weight: 400 !important;
+}
+
+p, a, td, span, li, ol, .v-list-item, .v-list-item__title, .v-toolbar__title, .v-text-field, .v-footer, input {
+  font-family: 'Fira Sans Condensed', helvetica, sans-serif;
+  font-weight: 400 !important;
+}
+
+b, strong {
+  font-family: 'Fira Sans Condensed', helvetica, sans-serif;
+  font-weight: 700 !important;
+}
+
+small, blockquote, .v-tab, .v-label, label, div {
+  font-family: 'Fira Sans Condensed', helvetica, sans-serif;
+  font-weight: 300 !important;
+}
+
+.monitor-header {
+  font-size: 1em !important;
+  text-align: center !important;
+}
+
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.component-fade-enter-from, .component-fade-leave-to {
+  opacity: 0;
+}
+
+.selected-sidebar {
+  background-color: #fff !important;
+  .v-list-item__avatar .v-icon, .v-list-item__title {
+    color: var(--v-primary-base) !important;
+  }
+}
+
+.selected-sidebar-dark, .selected-sidebar-dark:before {
+  background-color: var(--v-secondary-base) !important;
+
+  .v-list-item__avatar .v-icon, .v-list-item__title {
+    color: #fff !important;
+  }
+}
+
+.font-family__ {
+  &fira_sans {
+    font-family: "Fira Sans Extra Condensed", helvetica, sans-serif !important;
+    i,
+    span {
+      font-family: "Fira Sans Extra Condensed", helvetica, sans-serif !important;
+    }
+  }
+
+  &courgette {
+    font-family: "Courgette", cursive !important;
+    i,
+    span {
+      font-family: "Courgette", cursive !important;
+    }
+  }
+}
+
+.v-timeline-item__dot {
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.snackbar-transition {
+  transition: all 500ms ease-in-out;
+}
+
+.selected span table tr td {
+  color: #fff;
+}
+
+.unit-info-table {
+  font-weight: 200 !important;
+  font-size: 12px;
+  text-align: center;
+  width: 33%;
+}
+
+.v-card, .v-dialog, .v-expansion-panel.v-expansion-panel--active.v-item--active {
+  // border-radius: 4px;
+  border-radius: 10px !important;
+}
+
+.no__click {
+  pointer-events: none;
+}
+
+.v-expansion-panel-content__wrap{
+  padding: 0px !important;
+}
+
+.circle{
+  border-radius: 50%;
+}
+
+.gm-div-icon {
+  span {
+    text-align: center;
+    color: #000;
+    font-weight: bold !important;
+    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
+    padding: 5px 10px;
+    font-size: 1rem;
+    // background: rgba($color: #001E60, $alpha: 0.5);
+    // border-radius: 30px;
+  }
+}
+
+
+.gm_map--car_icon{
+  width: 32px;
+  height: 32px;
+}

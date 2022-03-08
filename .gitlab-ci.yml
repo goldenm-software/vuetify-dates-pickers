@@ -1,0 +1,17 @@
+image: node:12
+
+stages:
+  - deploy
+
+deploy-component:
+  stage: deploy
+  script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+    - npm publish
+
+  tags:
+    - general
+    - time4vps
+
+  only:
+    - main

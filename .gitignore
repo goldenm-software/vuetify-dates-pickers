@@ -1,0 +1,9 @@
+/.npmrc
+/.yarnrc
+/*.lock
+/node_modules
+/dist
+/build
+/*.log
+/.vscode
+*.tgz
