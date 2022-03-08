@@ -215,6 +215,11 @@ export default {
 
       if (this.amPm) {
         this.hour = format(initDateTime, 'hh')
+
+        if (parseInt(this.hour) > 12) {
+          this.hour = (parseInt(this.hour) - 12).toString()
+          this.hour = this.hour.length === 1 ? '0' + this.hour : this.hour
+        }
         this.block = format(initDateTime, 'a')
       } else {
         this.hour = format(initDateTime, 'HH')

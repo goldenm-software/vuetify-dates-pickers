@@ -343,6 +343,10 @@ export default {
 
       if (this.amPm) {
         this.start.hour = format(start, 'hh')
+        if (parseInt(this.start.hour) > 12) {
+          this.start.hour = (parseInt(this.start.hour) - 12).toString()
+          this.start.hour = this.start.hour.length === 1 ? '0' + this.start.hour : this.start.hour
+        }
         this.start.amPm = format(start, 'a')
       } else {
         this.start.hour = format(start, 'HH')
@@ -360,6 +364,10 @@ export default {
 
       if (this.amPm) {
         this.end.hour = format(end, 'hh')
+        if (parseInt(this.end.hour) > 12) {
+          this.end.hour = (parseInt(this.end.hour) - 12).toString()
+          this.end.hour = this.end.hour.length === 1 ? '0' + this.end.hour : this.end.hour
+        }
         this.end.amPm = format(end, 'a')
       } else {
         this.end.hour = format(end, 'HH')
