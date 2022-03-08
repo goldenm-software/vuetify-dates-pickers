@@ -1,8 +1,18 @@
 {
   "name": "vuetify-dates-pickers",
   "author": "Layrz Software <software@layrz.com>",
-  "version": "1.0.1",
-  "license": "UNLICENSED",
+  "version": "1.0.2",
+  "license": "MIT",
+  "description": "Various Vuetify date and time pickers",
+  "keywords": [
+    "vuetify",
+    "vue",
+    "vue2",
+    "layrz",
+    "range picker",
+    "datetime picker",
+    "datetime range picker"
+  ],
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack/webpack.dev.config.js"
