@@ -314,9 +314,8 @@ export default {
   },
 
   watch: {
-    value () {
-      this.init()
-    }
+    value () { this.init() },
+    amPm () { this.init() }
   },
 
   mounted () { this.init() },

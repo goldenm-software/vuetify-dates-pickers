@@ -165,7 +165,6 @@ export default {
         if (this.amPm) {
           time += ` ${this.block}`
         }
-        console.log(time)
         const selectedDateTime = `${this.date} ${time}`
         return parse(selectedDateTime, this.dateTimeFormat, new Date())
       } else {
@@ -190,9 +189,8 @@ export default {
   },
 
   watch: {
-    datetime () {
-      this.init()
-    }
+    datetime () { this.init() },
+    amPm () { this.init() }
   },
 
   mounted () { this.init() },
@@ -220,6 +218,7 @@ export default {
           this.hour = (parseInt(this.hour) - 12).toString()
           this.hour = this.hour.length === 1 ? '0' + this.hour : this.hour
         }
+        console.log(this.hour)
         this.block = format(initDateTime, 'a')
       } else {
         this.hour = format(initDateTime, 'HH')

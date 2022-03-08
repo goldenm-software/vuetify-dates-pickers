@@ -4,6 +4,14 @@
       <v-container>
         <v-row>
           <v-col cols="12">
+            <h2>AM/PM</h2>
+            <v-switch
+              v-model="amPm"
+              outlined
+            />
+          </v-col>
+
+          <v-col cols="12">
             <h2>Classic</h2>
             {{ classic }}
             <classic-picker
@@ -18,7 +26,7 @@
             <modern-picker
               v-model="modern"
               outlined
-              am-pm
+              :am-pm="amPm"
             />
           </v-col>
 
@@ -37,7 +45,7 @@
             <date-time-range-picker
               v-model="dateTimeRange"
               outlined
-              am-pm
+              :am-pm="amPm"
             />
           </v-col>
         </v-row>
@@ -67,7 +75,8 @@ export default {
       dateTimeRange: [
         new Date((new Date() - 1000 * 60 * 60)),
         new Date()
-      ]
+      ],
+      amPm: false
     }
   }
 }
