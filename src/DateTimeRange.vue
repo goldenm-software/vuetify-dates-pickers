@@ -173,7 +173,7 @@ export default {
     disabled: { type: Boolean, default: () => false },
     loading: { type: Boolean, default: () => false },
     label: { type: String, default: () => '' },
-    dialogWidth: { type: Number, default: () => DEFAULT_DIALOG_WIDTH * 2 },
+    dialogWidth: { type: Number, default: () => DEFAULT_DIALOG_WIDTH },
     dateFormat: { type: String, default: () => DEFAULT_DATE_FORMAT },
     clearText: { type: String, default: () => DEFAULT_CLEAR_TEXT },
     okText: { type: String, default: () => DEFAULT_OK_TEXT },
@@ -378,10 +378,27 @@ export default {
       this.$emit('input', this.parsedValues)
     },
 
+    resetDateValues () {
+      this.start = {
+        date: null,
+        hour: null,
+        minute: null,
+        amPm: null
+      }
+      this.end = {
+        date: null,
+        hour: null,
+        minute: null,
+        amPm: null
+      }
+    },
+
     clearHandler () {
-      this.resetPicker()
-      this.star = null
-      this.end = null
+      // this.resetPicker()
+      // this.star = null
+      // this.end = null
+      // this.init()
+      this.resetDateValues()
       this.$emit('input', [])
     },
 

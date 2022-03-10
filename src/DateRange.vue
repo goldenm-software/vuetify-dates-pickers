@@ -75,7 +75,7 @@ export default {
     disabled: { type: Boolean, default: () => false },
     loading: { type: Boolean, default: () => false },
     label: { type: String, default: () => '' },
-    dialogWidth: { type: Number, default: () => DEFAULT_DIALOG_WIDTH * 1.5 },
+    dialogWidth: { type: Number, default: () => DEFAULT_DIALOG_WIDTH },
     dateFormat: { type: String, default: () => DEFAULT_DATE_FORMAT },
     clearText: { type: String, default: () => DEFAULT_CLEAR_TEXT },
     okText: { type: String, default: () => DEFAULT_OK_TEXT },
