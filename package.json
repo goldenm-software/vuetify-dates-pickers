@@ -1,7 +1,7 @@
 {
   "name": "vuetify-dates-pickers",
   "author": "Layrz Software <software@layrz.com>",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "Various Vuetify date and time pickers",
   "keywords": [

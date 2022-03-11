@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="display" :width="dialogWidth">
+  <v-dialog
+    v-model="display"
+    :width="dialogWidth"
+    @click:outside="okHandler"
+  >
     <template #activator="{ on }">
       <v-text-field
         :disabled="disabled"
@@ -41,12 +45,12 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-row>
+            <v-row no-gutters>
               <v-col cols="12" class="pa-0 ma-0">
                 <h4 class="pa-0 ma-0 text-center">{{ startText }}</h4>
               </v-col>
 
-              <v-col cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
                 <v-autocomplete
                   v-model="start.hour"
                   class="text-center"
@@ -59,7 +63,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
                 <v-autocomplete
                   v-model="start.minute"
                   class="text-center"
@@ -89,12 +93,12 @@
           <v-divider vertical />
 
           <v-col cols="12" md="6">
-            <v-row>
+            <v-row no-gutters>
               <v-col cols="12" class="pa-0 ma-0">
                 <h4 class="pa-0 ma-0 text-center">{{ endText }}</h4>
               </v-col>
 
-              <v-col cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
                 <v-autocomplete
                   v-model="end.hour"
                   class="text-center"
@@ -107,7 +111,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
                 <v-autocomplete
                   v-model="end.minute"
                   class="text-center"
@@ -191,7 +195,7 @@ export default {
 
     color: { type: String, default: () => 'primary' },
     dark: { type: Boolean, default: () => false },
-    
+
     amPm: { type: Boolean, default: () => false }
   },
   data () {
@@ -284,7 +288,7 @@ export default {
     },
 
     parsedValues () {
-      const result = []
+      let result = []
       if (this.start.date && this.start.hour && this.start.minute) {
         let dateTimeStr = `${this.start.date} ${this.start.hour}:${this.start.minute}`
 
@@ -307,6 +311,18 @@ export default {
         result.push(parse(dateTimeStr, this.dateTimeFormat, new Date()))
       } else {
         result.push(null)
+      }
+
+      if (result[0].getTime() > result[1].getTime()) {
+        /*
+          If the user clicked the end date before the start date,
+          flip them around, the start of an interval should always be
+          in a date previous to the end of the interval.
+        */
+        result = [
+          result[1],
+          result[0]
+        ]
       }
 
       return result
@@ -394,12 +410,13 @@ export default {
     },
 
     clearHandler () {
-      // this.resetPicker()
-      // this.star = null
-      // this.end = null
-      // this.init()
       this.resetDateValues()
-      this.$emit('input', [])
+      this.$emit('input',
+        [
+          new Date((new Date() - 1000 * 60 * 60)),
+          new Date()
+        ]
+      )
     },
 
     resetPicker () {

@@ -48,6 +48,27 @@
               :am-pm="amPm"
             />
           </v-col>
+          <v-col cols="12">
+            <h2>Date Time Range 2</h2>
+            {{ dateTimeRange }}
+            <date-time-range-picker
+              v-model="dateTimeRange"
+              dateFormat="yyyy-MM-dd"
+              clearText="CLEAR"
+              okText="OK"
+              color="primary"
+              label="Picker"
+              :disabled="false"
+              :loading="false"
+              :outlined="false"
+              :solo="false"
+              :dark="false"
+              am-pm
+              :error="false"
+              :errorMessages="[]"
+              :dialogWidth="400"
+            />
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
