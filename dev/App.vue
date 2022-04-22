@@ -67,6 +67,7 @@
               :error="false"
               :errorMessages="[]"
               :dialogWidth="400"
+              :defaultStartDate="defaultStartDate"
             />
           </v-col>
         </v-row>
@@ -94,10 +95,16 @@ export default {
         new Date()
       ],
       dateTimeRange: [
-        new Date((new Date() - 1000 * 60 * 60)),
+        // 1000 ms 60s 60m 24h
+        new Date((new Date() - 1000 * 60 * 60 * 24)),
         new Date()
       ],
       amPm: false
+    }
+  },
+  methods: {
+    defaultStartDate () {
+      return new Date((new Date() - 1000 * 60 * 60 * 24))
     }
   }
 }

@@ -51,7 +51,7 @@
               </v-col>
 
               <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
-                <v-autocomplete
+                <v-combobox
                   v-model="start.hour"
                   class="text-center"
                   :items="hours"
@@ -60,11 +60,15 @@
                   append-icon=""
                   type="number"
                   hide-details
+                  hide-spin-buttons
+                  auto-select-first
+                  @change="validateStartHour"
+                  @input="validateStartHour"
                 />
               </v-col>
 
               <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
-                <v-autocomplete
+                <v-combobox
                   v-model="start.minute"
                   class="text-center"
                   :items="minutes"
@@ -73,6 +77,10 @@
                   append-icon=""
                   type="number"
                   hide-details
+                  hide-spin-buttons
+                  auto-select-first
+                  @change="validateStartMinute"
+                  @input="validateStartMinute"
                 />
               </v-col>
 
@@ -99,20 +107,24 @@
               </v-col>
 
               <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
-                <v-autocomplete
+                <v-combobox
                   v-model="end.hour"
                   class="text-center"
                   :items="hours"
                   solo
                   :allow-overflow="false"
                   append-icon=""
-                  type="number"
                   hide-details
+                  type="number"
+                  hide-spin-buttons
+                  auto-select-first
+                  @change="validateEndHour"
+                  @input="validateEndHour"
                 />
               </v-col>
 
               <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
-                <v-autocomplete
+                <v-combobox
                   v-model="end.minute"
                   class="text-center"
                   :items="minutes"
@@ -121,6 +133,10 @@
                   append-icon=""
                   type="number"
                   hide-details
+                  hide-spin-buttons
+                  auto-select-first
+                  @change="validateEndMinute"
+                  @input="validateEndMinute"
                 />
               </v-col>
 
@@ -196,7 +212,10 @@ export default {
     color: { type: String, default: () => 'primary' },
     dark: { type: Boolean, default: () => false },
 
-    amPm: { type: Boolean, default: () => false }
+    amPm: { type: Boolean, default: () => false },
+
+    defaultStartDate: { type: Function, default: null },
+    defaultEndDate: { type: Function, default: null }
   },
   data () {
     return {
@@ -411,16 +430,99 @@ export default {
 
     clearHandler () {
       this.resetDateValues()
+      let start
+      let end
+      if (this.defaultStartDate != null) {
+        start = this.defaultStartDate()
+      } else {
+        start = new Date((new Date() - 1000 * 60 * 60))
+      }
+      if (this.defaultEndDate != null) {
+        end = this.defaultEndDate()
+      } else {
+        end = new Date()
+      }
+
       this.$emit('input',
         [
-          new Date((new Date() - 1000 * 60 * 60)),
-          new Date()
+          start,
+          end
         ]
       )
+    },
+    validateStartMinute () {
+      if (this.start.minute.length > 2) {
+        // this.start.minute = this.start.minute.slice(this.start.minute.length - 2, this.start.minute.length)
+        this.$set(this.start, 'minute', this.start.minute.slice(this.start.minute.length - 2, this.start.minute.length))
+
+        if (!this.minuteRule(this.start.minute)) {
+          // this.start.minute = '00'
+          this.$set(this.start, 'minute', '00')
+        }
+      }
+    },
+    validateStartHour () {
+      if (this.start.hour.length > 2) {
+        // this.start.hour = this.start.hour.slice(this.start.hour.length - 2, this.start.hour.length)
+        this.$set(this.start, 'hour', this.start.hour.slice(this.start.hour.length - 2, this.start.hour.length))
+
+        if (this.amPm) {
+          if (!this.hourAmPmRule(this.start.hour)) {
+            // this.start.hour = '01'
+            this.$set(this.start, 'hour', '01')
+          }
+        } else {
+          if (!this.hourMilitaryRule(this.start.hour)) {
+            // this.start.hour = '00'
+            this.$set(this.start, 'hour', '00')
+          }
+        }
+      }
+    },
+    validateEndMinute () {
+      if (this.end.minute.length > 2) {
+        // this.end.minute = this.end.minute.slice(this.end.minute.length - 2, this.end.minute.length)
+        this.$set(this.end, 'minute', this.end.minute.slice(this.end.minute.length - 2, this.end.minute.length))
+
+        if (!this.minuteRule(this.end.minute)) {
+          // this.end.minute = '00'
+          this.$set(this.end, 'minute', '00')
+        }
+      }
+    },
+    validateEndHour () {
+      if (this.end.hour.length > 2) {
+        // this.end.hour = this.end.hour.slice(this.end.hour.length - 2, this.end.hour.length)
+        this.$set(this.end, 'hour', this.end.hour.slice(this.end.hour.length - 2, this.end.hour.length))
+
+        if (this.amPm) {
+          if (!this.hourAmPmRule(this.end.hour)) {
+            // this.end.hour = '01'
+            this.$set(this.end, 'hour', '01')
+          }
+        } else {
+          if (!this.hourMilitaryRule(this.end.hour)) {
+            // this.end.hour = '00'
+            this.$set(this.end, 'hour', '00')
+          }
+        }
+      }
     },
 
     resetPicker () {
       this.display = false
+    },
+    minuteRule (value) {
+      value = parseInt(value)
+      return value >= 0 && value <= 59
+    },
+    hourMilitaryRule (value) {
+      value = parseInt(value)
+      return value >= 0 && value <= 23
+    },
+    hourAmPmRule (value) {
+      value = parseInt(value)
+      return value >= 1 && value <= 12
     }
   }
 }

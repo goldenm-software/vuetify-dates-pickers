@@ -39,28 +39,36 @@
           </v-col>
 
           <v-col cols="12" :md="amPm ? 4 : 6">
-            <v-autocomplete
+            <v-combobox
               v-model="hour"
               class="text-center"
               :items="hours"
               solo
               :allow-overflow="false"
               append-icon=""
-              type="number"
               hide-details
+              type="number"
+              hide-spin-buttons
+              auto-select-first
+              @change="validateHour"
+              @input="validateHour"
             />
           </v-col>
 
           <v-col cols="12" :md="amPm ? 4 : 6">
-            <v-autocomplete
+            <v-combobox
               v-model="minute"
               class="text-center"
               :items="minutes"
               solo
               :allow-overflow="false"
               append-icon=""
-              type="number"
               hide-details
+              type="number"
+              hide-spin-buttons
+              auto-select-first
+              @change="validateMinute"
+              @input="validateMinute"
             />
           </v-col>
 
@@ -230,14 +238,50 @@ export default {
       this.$emit('input', this.selectedDatetime)
     },
     clearHandler () {
-      this.resetPicker()
+      // this.resetPicker()
       this.date = null
       this.hour = null
       this.minute = null
-      this.$emit('input', null)
+      this.$emit('input', new Date())
     },
     resetPicker () {
       this.display = false
+    },
+    validateMinute () {
+      if (this.minute.length > 2) {
+        this.minute = this.minute.slice(this.minute.length - 2, this.minute.length)
+
+        if (!this.minuteRule(this.minute)) {
+          this.minute = '00'
+        }
+      }
+    },
+    validateHour () {
+      if (this.hour.length > 2) {
+        this.hour = this.hour.slice(this.hour.length - 2, this.hour.length)
+
+        if (this.amPm) {
+          if (!this.hourAmPmRule(this.hour)) {
+            this.hour = '01'
+          }
+        } else {
+          if (!this.hourMilitaryRule(this.hour)) {
+            this.hour = '00'
+          }
+        }
+      }
+    },
+    minuteRule (value) {
+      value = parseInt(value)
+      return value >= 0 && value <= 59
+    },
+    hourMilitaryRule (value) {
+      value = parseInt(value)
+      return value >= 0 && value <= 23
+    },
+    hourAmPmRule (value) {
+      value = parseInt(value)
+      return value >= 1 && value <= 12
     }
   }
 }
