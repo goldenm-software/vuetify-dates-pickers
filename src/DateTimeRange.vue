@@ -50,7 +50,7 @@
                 <h4 class="pa-0 ma-0 text-center">{{ startText }}</h4>
               </v-col>
 
-              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1 mt-1" cols="12" :md="amPm ? 4 : 6">
                 <v-combobox
                   v-model="start.hour"
                   class="text-center"
@@ -67,7 +67,7 @@
                 />
               </v-col>
 
-              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1 mt-1" cols="12" :md="amPm ? 4 : 6">
                 <v-combobox
                   v-model="start.minute"
                   class="text-center"
@@ -84,7 +84,7 @@
                 />
               </v-col>
 
-              <v-col v-if="amPm" cols="12" md="4">
+              <v-col v-if="amPm" cols="12" md="4" class="mt-1">
                 <v-autocomplete
                   v-model="start.amPm"
                   class="text-center"
@@ -106,7 +106,7 @@
                 <h4 class="pa-0 ma-0 text-center">{{ endText }}</h4>
               </v-col>
 
-              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1 mt-1" cols="12" :md="amPm ? 4 : 6">
                 <v-combobox
                   v-model="end.hour"
                   class="text-center"
@@ -123,7 +123,7 @@
                 />
               </v-col>
 
-              <v-col class="pr-1" cols="12" :md="amPm ? 4 : 6">
+              <v-col class="pr-1 mt-1" cols="12" :md="amPm ? 4 : 6">
                 <v-combobox
                   v-model="end.minute"
                   class="text-center"
@@ -140,7 +140,7 @@
                 />
               </v-col>
 
-              <v-col v-if="amPm" cols="12" md="4">
+              <v-col v-if="amPm" cols="12" md="4" class="mt-1">
                 <v-autocomplete
                   v-model="end.amPm"
                   class="text-center"
