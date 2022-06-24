@@ -30,6 +30,7 @@
             <v-date-picker
               v-model="date"
               v-bind="datePickerProps"
+              :title-date-format="titleDates"
               full-width
             />
           </v-col>
@@ -111,7 +112,7 @@
 
 <script>
 import { format, parse } from 'date-fns'
-import { DEFAULT_DATE_FORMAT, DEFAULT_DIALOG_WIDTH, DEFAULT_CLEAR_TEXT, DEFAULT_OK_TEXT } from './utils/constants'
+import { DEFAULT_DATE_FORMAT, DEFAULT_TIME_FORMAT, DEFAULT_DIALOG_WIDTH, DEFAULT_CLEAR_TEXT, DEFAULT_OK_TEXT } from './utils/constants'
 
 export default {
   model: {
@@ -163,18 +164,22 @@ export default {
       return this.dateFormat + ' ' + this.timeFormat
     },
 
+    defaultDateTimeFormat () {
+      return DEFAULT_DATE_FORMAT + ' ' + DEFAULT_TIME_FORMAT
+    },
+
     formattedDatetime () {
       return this.selectedDatetime ? format(this.selectedDatetime, this.dateTimeFormat) : ''
     },
 
     selectedDatetime () {
       if (this.date && this.hour && this.minute) {
-        let time = `${this.hour}:${this.minute}`
+        let time = `${this.hour}:${this.minute}:00`
         if (this.amPm) {
           time += ` ${this.block}`
         }
         const selectedDateTime = `${this.date} ${time}`
-        return parse(selectedDateTime, this.dateTimeFormat, new Date())
+        return parse(selectedDateTime, this.defaultDateTimeFormat, new Date())
       } else {
         return null
       }
@@ -232,6 +237,9 @@ export default {
         this.hour = format(initDateTime, 'HH')
         this.block = null
       }
+    },
+    titleDates (date) {
+      return format(parse(date, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)
     },
     okHandler () {
       this.resetPicker()
