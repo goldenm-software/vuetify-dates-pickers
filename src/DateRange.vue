@@ -29,7 +29,7 @@
           <v-col cols="12" class="pa-0">
             <v-date-picker
               v-model="dates"
-              :title-date-format="parseDates"
+              :title-date-format="titleDates"
               full-width
               show-adjacent-months
               range
@@ -121,13 +121,13 @@ export default {
     formattedDate () {
       let result = ''
       if (this.start) {
-        result = this.start
+        result = format(parse(this.start, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)
       } else {
         result = 'N/A '
       }
 
       if (this.end) {
-        result += ` - ${this.end}`
+        result += ` - ${format(parse(this.end, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)}`
       } else {
         result += ' - N/A'
       }
@@ -144,8 +144,11 @@ export default {
   mounted () { this.init() },
 
   methods: {
-    parseDates (dates) {
-      return dates.join(' - ')
+    titleDates (dates) {
+      const formattedDates = dates.map(date => {
+        return format(parse(date, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)
+      })
+      return formattedDates.join(' - ')
     },
 
     init () {
@@ -156,21 +159,21 @@ export default {
       if (typeof this.value[0] === 'string') {
         this.start = this.value[0]
       } else {
-        this.start = format(this.value[0], this.dateFormat)
+        this.start = format(this.value[0], DEFAULT_DATE_FORMAT)
       }
 
       if (typeof this.value[1] === 'string') {
         this.end = this.value[1]
       } else {
-        this.end = format(this.value[1], this.dateFormat)
+        this.end = format(this.value[1], DEFAULT_DATE_FORMAT)
       }
     },
 
     okHandler () {
       this.resetPicker()
       this.$emit('input', [
-        parse(this.start, this.dateFormat, new Date()),
-        parse(this.end, this.dateFormat, new Date())
+        parse(this.start, DEFAULT_DATE_FORMAT, new Date()),
+        parse(this.end, DEFAULT_DATE_FORMAT, new Date())
       ])
     },
 
