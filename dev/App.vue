@@ -27,6 +27,7 @@
             <modern-picker
               v-model="modern"
               outlined
+              date-format="MM-dd-yyyy"
               :am-pm="amPm"
             />
           </v-col>
@@ -36,6 +37,7 @@
             {{ dateRange }}
             <date-range-picker
               v-model="dateRange"
+              date-format="MM-dd-yyyy"
               outlined
             />
           </v-col>
@@ -46,6 +48,7 @@
             <date-time-range-picker
               v-model="dateTimeRange"
               outlined
+              date-format="MM-dd-yyyy"
               :am-pm="amPm"
             />
           </v-col>
@@ -54,7 +57,7 @@
             {{ dateTimeRange }}
             <date-time-range-picker
               v-model="dateTimeRange"
-              date-format="dd-MM-yyyy"
+              date-format="MM-dd-yyyy"
               clearText="CLEAR"
               okText="OK"
               color="primary"
