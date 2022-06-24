@@ -187,8 +187,6 @@
 import { format, parse } from 'date-fns'
 import { DEFAULT_DATE_FORMAT, DEFAULT_DIALOG_WIDTH, DEFAULT_CLEAR_TEXT, DEFAULT_OK_TEXT, DEFAULT_START_TEXT, DEFAULT_END_TEXT } from './utils/constants'
 
-const DATE_FORMAT_TO_CALCULATE = 'yyyy-MM-dd'
-
 export default {
   model: {
     prop: 'value',
@@ -275,7 +273,7 @@ export default {
     },
 
     dateTimeFormat () {
-      return DATE_FORMAT_TO_CALCULATE + ' ' + this.timeFormat
+      return DEFAULT_DATE_FORMAT + ' ' + this.timeFormat
     },
 
     visualDateTimeFormat () {
@@ -390,7 +388,7 @@ export default {
   methods: {
     titleDates (dates) {
       const formattedDates = dates.map(date => {
-        return format(parse(date, DATE_FORMAT_TO_CALCULATE, new Date()), this.dateFormat)
+        return format(parse(date, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)
       })
       return formattedDates.join(' - ')
     },
@@ -407,7 +405,7 @@ export default {
         start = this.value[0]
       }
 
-      this.start.date = format(start, DATE_FORMAT_TO_CALCULATE)
+      this.start.date = format(start, DEFAULT_DATE_FORMAT)
       this.start.minute = format(start, 'mm')
 
       if (this.amPm) {
@@ -428,7 +426,7 @@ export default {
         end = this.value[1]
       }
 
-      this.end.date = format(end, DATE_FORMAT_TO_CALCULATE)
+      this.end.date = format(end, DEFAULT_DATE_FORMAT)
       this.end.minute = format(end, 'mm')
 
       if (this.amPm) {

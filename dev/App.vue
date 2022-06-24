@@ -16,6 +16,7 @@
             {{ classic }}
             <classic-picker
               v-model="classic"
+              date-format="MM-dd-yyyy"
               outlined
             />
           </v-col>
