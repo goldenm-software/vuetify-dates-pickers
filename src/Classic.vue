@@ -42,6 +42,7 @@
               v-model="date"
               v-bind="datePickerProps"
               :disabled="disableDate"
+              :title-date-format="titleDate"
               full-width
               @input="showTimePicker"
             />
@@ -172,6 +173,9 @@ export default {
   mounted () { this.init() },
 
   methods: {
+    titleDate (date) {
+      return format(parse(date, DEFAULT_DATE_FORMAT, new Date()), this.dateFormat)
+    },
     init () {
       if (!this.datetime) {
         return
