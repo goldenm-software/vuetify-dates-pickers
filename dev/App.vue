@@ -3,7 +3,7 @@
     <v-main>
       <v-container>
         <v-row>
-          <!-- <v-col cols="12">
+          <v-col cols="12">
             <h2>AM/PM</h2>
             <v-switch
               v-model="amPm"
@@ -47,13 +47,13 @@
               outlined
               :am-pm="amPm"
             />
-          </v-col> -->
+          </v-col>
           <v-col cols="12">
             <h2>Date Time Range 2</h2>
             {{ dateTimeRange }}
             <date-time-range-picker
               v-model="dateTimeRange"
-              dateFormat="yyyy-MM-dd"
+              date-format="dd-MM-yyyy"
               clearText="CLEAR"
               okText="OK"
               color="primary"
@@ -76,12 +76,12 @@
 </template>
 
 <script>
-import { /* Classic, Modern, DateRange, */ DateTimeRange } from '@'
+import { Classic, Modern, DateRange, DateTimeRange } from '@'
 export default {
   components: {
-    // 'classic-picker': Classic,
-    // 'modern-picker': Modern,
-    // 'date-range-picker': DateRange,
+    'classic-picker': Classic,
+    'modern-picker': Modern,
+    'date-range-picker': DateRange,
     'date-time-range-picker': DateTimeRange
   },
 
@@ -93,12 +93,11 @@ export default {
         new Date((new Date() - 1000 * 60 * 60)),
         new Date()
       ],
-      // dateTimeRange: [
-      //   // 1000 ms 60s 60m 24h
-      //   new Date((new Date() - 1000 * 60 * 60 * 24)),
-      //   new Date()
-      // ],
-      dateTimeRange: [],
+      dateTimeRange: [
+        // 1000 ms 60s 60m 24h
+        new Date((new Date() - 1000 * 60 * 60 * 24)),
+        new Date()
+      ],
       amPm: false
     }
   },

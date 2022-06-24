@@ -37,7 +37,7 @@
           <v-col cols="12" class="pa-0">
             <v-date-picker
               v-model="dates"
-              :title-date-format="parseDates"
+              :title-date-format="titleDates"
               full-width
               show-adjacent-months
               range
@@ -187,6 +187,8 @@
 import { format, parse } from 'date-fns'
 import { DEFAULT_DATE_FORMAT, DEFAULT_DIALOG_WIDTH, DEFAULT_CLEAR_TEXT, DEFAULT_OK_TEXT, DEFAULT_START_TEXT, DEFAULT_END_TEXT } from './utils/constants'
 
+const DATE_FORMAT_TO_CALCULATE = 'yyyy-MM-dd'
+
 export default {
   model: {
     prop: 'value',
@@ -273,6 +275,10 @@ export default {
     },
 
     dateTimeFormat () {
+      return DATE_FORMAT_TO_CALCULATE + ' ' + this.timeFormat
+    },
+
+    visualDateTimeFormat () {
       return this.dateFormat + ' ' + this.timeFormat
     },
 
@@ -280,6 +286,7 @@ export default {
       let result = ''
       const hasStart = this.start.date && this.start.hour && this.start.minute
       const hasEnd = this.end.date && this.end.hour && this.end.minute
+      let endText = ''
 
       if (!hasStart && !hasEnd) {
         return ''
@@ -291,16 +298,21 @@ export default {
         } else {
           result = `${this.start.date} ${this.start.hour}:${this.start.minute}`
         }
+        // turn date format to given format
+        result = format(parse(result, this.dateTimeFormat, new Date()), this.visualDateTimeFormat)
       } else {
         result = 'N/A '
       }
 
       if (this.end.date && this.end.hour && this.end.minute) {
         if (this.amPm) {
-          result += ` - ${this.end.date} ${this.end.hour}:${this.end.minute} ${this.end.amPm}`
+          endText = `${this.end.date} ${this.end.hour}:${this.end.minute} ${this.end.amPm}`
         } else {
-          result += ` - ${this.end.date} ${this.end.hour}:${this.end.minute}`
+          endText = `${this.end.date} ${this.end.hour}:${this.end.minute}`
         }
+        // turn date format to given format
+        endText = format(parse(endText, this.dateTimeFormat, new Date()), this.visualDateTimeFormat)
+        result += ` - ${endText}`
       } else {
         result += ' - N/A'
       }
@@ -376,8 +388,11 @@ export default {
   mounted () { this.init() },
 
   methods: {
-    parseDates (dates) {
-      return dates.join(' - ')
+    titleDates (dates) {
+      const formattedDates = dates.map(date => {
+        return format(parse(date, DATE_FORMAT_TO_CALCULATE, new Date()), this.dateFormat)
+      })
+      return formattedDates.join(' - ')
     },
 
     init () {
@@ -392,7 +407,7 @@ export default {
         start = this.value[0]
       }
 
-      this.start.date = format(start, this.dateFormat)
+      this.start.date = format(start, DATE_FORMAT_TO_CALCULATE)
       this.start.minute = format(start, 'mm')
 
       if (this.amPm) {
@@ -413,7 +428,7 @@ export default {
         end = this.value[1]
       }
 
-      this.end.date = format(end, this.dateFormat)
+      this.end.date = format(end, DATE_FORMAT_TO_CALCULATE)
       this.end.minute = format(end, 'mm')
 
       if (this.amPm) {
