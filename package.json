@@ -1,7 +1,7 @@
 {
   "name": "vuetify-dates-pickers",
   "author": "Layrz Software <software@layrz.com>",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "description": "Various Vuetify date and time pickers",
   "keywords": [
@@ -53,53 +53,6 @@
     "webpack-bundle-tracker": "^1.0.0-alpha.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "plugins": [
-      "vue"
-    ],
-    "extends": [
-      "plugin:vue/recommended",
-      "standard"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {
-      "vue/component-name-in-template-casing": [
-        "error",
-        "kebab-case",
-        {
-          "ignores": []
-        }
-      ],
-      "no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "vue/max-attributes-per-line": [
-        "error",
-        {
-          "singleline": 5,
-          "multiline": {
-            "max": 5,
-            "allowFirstLine": true
-          }
-        }
-      ],
-      "vue/valid-v-slot": "off",
-      "vue/attribute-hyphenation": "off",
-      "vue/singleline-html-element-content-newline": "off",
-      "handle-callback-err": "off",
-      "eol-last": "off",
-      "no-trailing-spaces": "off"
-    }
   },
   "browserslist": [
     "> 1%",

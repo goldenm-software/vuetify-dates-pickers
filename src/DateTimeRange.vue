@@ -17,6 +17,10 @@
         :outlined="outlined"
         :color="color"
         :dark="dark"
+        :dense="dense"
+        :hide-details="hideDetails"
+        :append-icon="appendIcon"
+        @click:append="$emit('click:append')"
         v-on="on"
       >
         <template #progress>
@@ -208,6 +212,8 @@ export default {
     // Other field styles
     outlined: { type: Boolean, default: () => false },
     solo: { type: Boolean, default: () => false },
+    hideDetails: { type: Boolean, default: () => false },
+    dense: { type: Boolean, default: () => false },
 
     color: { type: String, default: () => 'primary' },
     dark: { type: Boolean, default: () => false },
@@ -215,7 +221,10 @@ export default {
     amPm: { type: Boolean, default: () => false },
 
     defaultStartDate: { type: Function, default: null },
-    defaultEndDate: { type: Function, default: null }
+    defaultEndDate: { type: Function, default: null },
+
+    // Suffix icon
+    appendIcon: { type: String, default: () => '' }
   },
   data () {
     return {
@@ -269,7 +278,14 @@ export default {
 
     formattedDateTime () {
       let result = ''
-      if (this.start.date && this.start.hour && this.start.minute) {
+      const hasStart = this.start.date && this.start.hour && this.start.minute
+      const hasEnd = this.end.date && this.end.hour && this.end.minute
+
+      if (!hasStart && !hasEnd) {
+        return ''
+      }
+
+      if (hasStart) {
         if (this.amPm) {
           result = `${this.start.date} ${this.start.hour}:${this.start.minute} ${this.start.amPm}`
         } else {
@@ -308,40 +324,44 @@ export default {
 
     parsedValues () {
       let result = []
-      if (this.start.date && this.start.hour && this.start.minute) {
-        let dateTimeStr = `${this.start.date} ${this.start.hour}:${this.start.minute}`
+      try {
+        if (this.start.date && this.start.hour && this.start.minute) {
+          let dateTimeStr = `${this.start.date} ${this.start.hour || 0}:${this.start.minute || 0}`
 
-        if (this.amPm) {
-          dateTimeStr += ` ${this.start.amPm}`
+          if (this.amPm) {
+            dateTimeStr += ` ${this.start.amPm}`
+          }
+
+          result.push(parse(dateTimeStr, this.dateTimeFormat, new Date()))
+        } else {
+          result.push(null)
         }
 
-        result.push(parse(dateTimeStr, this.dateTimeFormat, new Date()))
-      } else {
-        result.push(null)
-      }
+        if (this.end.date && this.end.hour && this.end.minute) {
+          let dateTimeStr = `${this.end.date} ${this.end.hour}:${this.end.minute}`
 
-      if (this.end.date && this.end.hour && this.end.minute) {
-        let dateTimeStr = `${this.end.date} ${this.end.hour}:${this.end.minute}`
+          if (this.amPm) {
+            dateTimeStr += ` ${this.end.amPm}`
+          }
 
-        if (this.amPm) {
-          dateTimeStr += ` ${this.end.amPm}`
+          result.push(parse(dateTimeStr, this.dateTimeFormat, new Date()))
+        } else {
+          result.push(null)
         }
 
-        result.push(parse(dateTimeStr, this.dateTimeFormat, new Date()))
-      } else {
-        result.push(null)
-      }
-
-      if (result[0].getTime() > result[1].getTime()) {
-        /*
-          If the user clicked the end date before the start date,
-          flip them around, the start of an interval should always be
-          in a date previous to the end of the interval.
-        */
-        result = [
-          result[1],
-          result[0]
-        ]
+        if (result[0].getTime() > result[1].getTime()) {
+          /*
+            If the user clicked the end date before the start date,
+            flip them around, the start of an interval should always be
+            in a date previous to the end of the interval.
+          */
+          result = [
+            result[1],
+            result[0]
+          ]
+        }
+      } catch {
+        result = [null, null]
       }
 
       return result
@@ -361,8 +381,8 @@ export default {
     },
 
     init () {
-      if (this.value.length !== 2) {
-        return ''
+      if (this.value.filter(item => !!item).length !== 2) {
+        return
       }
 
       let start
@@ -411,6 +431,7 @@ export default {
     okHandler () {
       this.resetPicker()
       this.$emit('input', this.parsedValues)
+      this.$emit('when:save', this.parsedValues)
     },
 
     resetDateValues () {
