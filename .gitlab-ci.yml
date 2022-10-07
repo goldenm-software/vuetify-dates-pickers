@@ -9,9 +9,5 @@ deploy-component:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm publish
 
-  tags:
-    - general
-    - time4vps
-
   only:
     - main
