@@ -1,8 +1,13 @@
 {
   "name": "vuetify-dates-pickers",
   "author": "Layrz Software <software@layrz.com>",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldenm-software/vuetify-dates-pickers"
+  },
+  "homepage": "https://github.com/goldenm-software/vuetify-dates-pickers#readme",
   "description": "Various Vuetify date and time pickers",
   "keywords": [
     "vuetify",

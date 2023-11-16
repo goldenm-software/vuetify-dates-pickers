@@ -1,0 +1,28 @@
+name: "Deploy package"
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/goldenm-software/nodejs-builder:16.13
+      options: --user root
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    env:
+      NPM_TOKEN: ${{ secrets.LAYRZ_PUBLIC_NPM_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload to NPM Package Index
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          npm publish
+          rm .npmrc
