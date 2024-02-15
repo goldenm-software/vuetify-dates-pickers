@@ -7,9 +7,9 @@ Managed by Golden M, Inc.
 It's a varous date and time pickers combined, used along of Layrz Apps, the concept is provide a simple way to
 select a date and time (Depends of the component) without a complex selectors or something like that.
 
-## Documentation
+## Example of usage
 
-It's available in our documentation site [developers.layrz.com](https://developers.layrz.com/Components/DateTimePickers)
+Checkout the `dev` folder for a simple example of usage.
 
 ## Work with us
 
